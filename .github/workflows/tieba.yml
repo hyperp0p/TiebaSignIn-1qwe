@@ -24,4 +24,6 @@ jobs:
       - name: Run sign-in
         env:
           BDUSS: ${{ secrets.BDUSS }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+          BARK_SERVER: ${{ secrets.BARK_SERVER }}
         run: python run.py
