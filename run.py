@@ -60,7 +60,13 @@ def send_bark(
         return
 
     server = os.environ.get("BARK_SERVER", "https://api.day.app")
-    url = f"{server.rstrip('/')}/{bark_key.strip('/')}/{quote(title)}/{quote(body)}"
+    if not server:
+        server = "https://api.day.app"
+    server = server.rstrip("/")
+    if not server.startswith(("http://", "https://")):
+        logger.error(f"BARK_SERVER 无效: {server}，跳过推送")
+        return
+    url = f"{server}/{bark_key.strip('/')}/{quote(title)}/{quote(body)}"
 
     params: dict = {"group": group, "level": level}
     if sound:
